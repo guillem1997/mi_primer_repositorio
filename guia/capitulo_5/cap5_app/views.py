@@ -17,22 +17,34 @@ def insert(request):
 
 
 def select(request):
+   conn = psycopg2.connect(dbname="capitulo_4_db",
+                           user="capitulo_4_user",
+                           password="patata")
+   cursor = conn.cursor()
+   cursor.execute("select * from emp")
+   html = '<html>'
+   columns = [col[0] for col in cursor.description]
+   for column in columns:
+       html += str(column) + '|'
+   html += '<br>'
+   for empleado in cursor.fetchall():
+       for columna in empleado:
+           html += str(columna) + '|'
+       html += '<br>'
+   html += '</html>'
+   cursor.close()
+   conn.close()
+   return HttpResponse(html)
+
+
+def borrar(request):
     conn = psycopg2.connect(dbname="capitulo_4_db",
                             user="capitulo_4_user",
                             password="patata")
     cursor = conn.cursor()
-    cursor.execute("select * from emp")
-    html = '<html>'
-    columns = [col[0] for col in cursor.description]
-    for column in columns:
-        html += str(column) + '|'
-    html += '<br>'
-    for empleado in cursor.fetchall():
-        for columna in empleado:
-            html += str(columna) + '|'
-        html += '<br>'
-    html += '</html>'
+    cursor.execute("DELETE FROM emp")
+    conn.commit()
     cursor.close()
     conn.close()
-    return HttpResponse(html)
+    return HttpResponse("All clear")
 # Create your views here.
