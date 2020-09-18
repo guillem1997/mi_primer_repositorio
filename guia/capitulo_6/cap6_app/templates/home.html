@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<br>
+<h1>Notas</h1>
+<form method="POST" action="/anadir">{% csrf_token %}
+Prioridad: <select>
+    <option value="Alta">Alta</option>
+    <option value="Media">Media</option>
+    <option value="Baja">Baja</option>
+</select><br>
+<input type="text" name="titulo" placeholder="Titulo" size="35"><br>
+<textarea name="Nota" rows="10" cols="50" placeholder="Escribe tu nota aqui"></textarea><br>
+<input type="submit" value="Guardar">
+</form>
+</body>
+</html>
