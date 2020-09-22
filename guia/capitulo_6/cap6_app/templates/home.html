@@ -1,4 +1,3 @@
-<a href="{% url 'Consultar' %}">Consultar</a> <br>
 <a href="{% url 'Borrar' %}">Borrar</a> <br>
 
 <html>
@@ -7,6 +6,12 @@
 	</head>
 	<body>
 	<h1>Notas</h1>
+	{% for nota in notas %}
+   <fieldset>
+       <legend>{{ nota.prioridad }} - {{ nota.titulo }}</legend>
+       {{ nota.contenido }} <br>
+   </fieldset>
+{% endfor %}
 	<form method="POST" action="/anadir"> {% csrf_token %}
     	<label for="id_prioridad">Prioridad:</label>
     	<select id="id_prioridad" name="name_prioridad">

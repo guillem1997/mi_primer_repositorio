@@ -1,12 +1,23 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
+import psycopg2.extras
 
 import psycopg2
 
 
 def home(request):
-    return render(request, 'home.html')
+    conn = psycopg2.connect(dbname="capitulo_6_db",
+                            user="capitulo_6_user",
+                            password="patata")
+    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT * FROM Nota;")
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    params = {'notas': result}
+    return render(request, 'home.html', params)
 
 
 def anadir(request):
