@@ -6,12 +6,6 @@
 	</head>
 	<body>
 	<h1>Notas</h1>
-	{% for nota in notas %}
-   <fieldset>
-       <legend>{{ nota.prioridad }} - {{ nota.titulo }}</legend>
-       {{ nota.contenido }} <br>
-   </fieldset>
-{% endfor %}
 	<form method="GET" action="{% url 'Home' %}">
    		<label for="id_prioridad">Prioridad:</label>
    		<select id="id_prioridad_2" name="get_prioridad">
@@ -21,6 +15,13 @@
    		</select>
 		<input type="submit" value="filtrar">
 	</form>
+	{% for nota in notas %}
+   <fieldset>
+       <legend>{{ nota.prioridad }} - {{ nota.titulo }}</legend>
+       {{ nota.contenido }} <br>
+   </fieldset>
+{% endfor %}
+
 	<form method="POST" action="/anadir"> {% csrf_token %}
     	<label for="id_prioridad">Prioridad:</label>
     	<select id="id_prioridad" name="name_prioridad">
