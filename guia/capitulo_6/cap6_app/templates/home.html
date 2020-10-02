@@ -1,4 +1,4 @@
-<a href="{% url 'Borrar' %}">Borrar</a> <br>
+<a href="{% url 'Home' %}">Home</a> <br> <a href="{% url 'Borrar' %}">Borrar</a> <br>
 
 <html>
 	<head>
@@ -12,12 +12,21 @@
        {{ nota.contenido }} <br>
    </fieldset>
 {% endfor %}
+	<form method="GET" action="{% url 'Home' %}">
+   		<label for="id_prioridad">Prioridad:</label>
+   		<select id="id_prioridad_2" name="get_prioridad">
+           		<option value="alta">Alta</option>
+           		<option value="normal">Normal</option>
+           		<option value="baja">Baja</option>
+   		</select>
+		<input type="submit" value="filtrar">
+	</form>
 	<form method="POST" action="/anadir"> {% csrf_token %}
     	<label for="id_prioridad">Prioridad:</label>
     	<select id="id_prioridad" name="name_prioridad">
-            	<option value="Alta">Alta</option>
-            	<option value="Normal">Normal</option>
-            	<option value="Baja">Baja</option>
+            	<option value="alta">Alta</option>
+            	<option value="normal">Normal</option>
+            	<option value="baja">Baja</option>
     	</select>
     	<br>
     	<input type="text" name="name_titulo" placeholder="titulo" size="27"><br>

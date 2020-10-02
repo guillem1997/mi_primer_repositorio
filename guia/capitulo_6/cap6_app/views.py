@@ -10,12 +10,19 @@ def home(request):
     conn = psycopg2.connect(dbname="capitulo_6_db",
                             user="capitulo_6_user",
                             password="patata")
+
     cursor = conn.cursor()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("SELECT * FROM Nota;")
+    prioridad = request.GET.get('get_prioridad', default=None)
+    if (prioridad is None):
+        cursor.execute(f"SELECT * FROM Nota;")
+    else:
+        cursor.execute(f"SELECT * FROM Nota WHERE prioridad='{prioridad}';")
     result = cursor.fetchall()
+    conn.commit()
     cursor.close()
     conn.close()
+
     params = {'notas': result}
     return render(request, 'home.html', params)
 
