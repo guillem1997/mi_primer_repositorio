@@ -11,10 +11,11 @@ def home(request):
                             user="capitulo_6_user",
                             password="patata")
 
-    cursor = conn.cursor()
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    prioridad = request.GET.get('get_prioridad', default=None)
-    if (prioridad is None):
+    prioridad = request.GET.get('get_prioridad', default='%')
+    with open("debug.log", "w") as debug_file:
+        print(f"SELECT * FROM Nota WHERE prioridad LIKE '{prioridad}';", file=debug_file)
+    if prioridad is '%':
         cursor.execute(f"SELECT * FROM Nota;")
     else:
         cursor.execute(f"SELECT * FROM Nota WHERE prioridad='{prioridad}';")
